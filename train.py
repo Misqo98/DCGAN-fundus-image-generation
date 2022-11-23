@@ -29,7 +29,8 @@ params = {
     'ngf' : 32,# Size of feature maps in the generator. The depth will be multiples of this.
     'ndf' : 64, # Size of features maps in the discriminator. The depth will be multiples of this.
     'nepochs' : 50,# Number of training epochs.
-    'lr' : 0.0002,# Learning rate for optimizers
+    'lr_D' : 0.0002,# Learning rate for Discriminator optimizer
+    'lr_G' : 0.0002,# Learning rate for Generator optimizer
     'beta1' : 0.5,# Beta1 hyperparam for Adam optimizer
     'save_epoch' : 2}# Save step.
 
@@ -41,14 +42,14 @@ print(device, " will be used.\n")
 dataloader = get_celeba(params)
 
 # Plot the training images.
-#sample_batch = next(iter(dataloader))
-#plt.figure(figsize=(8, 8))
-#plt.axis("off")
-#plt.title("Training Images")
-#plt.imshow(np.transpose(vutils.make_grid(
-#    sample_batch[0].to(device)[ : 64], padding=2, normalize=True).cpu(), (1, 2, 0)))
-#
-#plt.show()
+# sample_batch = next(iter(dataloader))
+# plt.figure(figsize=(8, 8))
+# plt.axis("off")
+# plt.title("Training Images")
+# plt.imshow(np.transpose(vutils.make_grid(
+#     sample_batch[0].to(device)[ : 64], padding=2, normalize=True).cpu(), (1, 2, 0)))
+
+# plt.show()
 
 # Create the generator.
 netG = Generator(params).to(device)
@@ -75,9 +76,9 @@ real_label = 1
 fake_label = 0
 
 # Optimizer for the discriminator.
-optimizerD = optim.Adam(netD.parameters(), lr=params['lr'], betas=(params['beta1'], 0.999))
+optimizerD = optim.Adam(netD.parameters(), lr=params['lr_D'], betas=(params['beta1'], 0.999))
 # Optimizer for the generator.
-optimizerG = optim.Adam(netG.parameters(), lr=params['lr'], betas=(params['beta1'], 0.999))
+optimizerG = optim.Adam(netG.parameters(), lr=params['lr_G'], betas=(params['beta1'], 0.999))
 
 # Stores generated images as training progresses.
 img_list = []
@@ -201,6 +202,7 @@ plt.xlabel("iterations")
 plt.ylabel("Loss")
 plt.legend()
 plt.show()
+plt.savefig('loss.jpg',format='jpg')
 
 # Animation showing the improvements of the generator.
 fig = plt.figure(figsize=(8,8))
@@ -208,4 +210,4 @@ plt.axis("off")
 ims = [[plt.imshow(np.transpose(i,(1,2,0)), animated=True)] for i in img_list]
 anim = animation.ArtistAnimation(fig, ims, interval=1000, repeat_delay=1000, blit=True)
 plt.show()
-anim.save('celeba.gif', dpi=80, writer='imagemagick')
+anim.save('fundus.gif', dpi=80, writer='imagemagick')

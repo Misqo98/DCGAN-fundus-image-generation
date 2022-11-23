@@ -54,11 +54,11 @@ class Generator(nn.Module):
             4, 2, 1, bias=False)
         #Output Dimension: (nc) 360 x 360
     def forward(self, x):
-        x = F.relu(self.bn1(self.tconv1(x)))
-        x = F.relu(self.bn2(self.tconv2(x)))
-        x = F.relu(self.bn3(self.tconv3(x)))
-        x = F.relu(self.bn4(self.tconv4(x)))
-        x = F.relu(self.bn5(self.tconv5(x)))
+        x = F.leaky_relu(self.bn1(self.tconv1(x)), 0.2, True)
+        x = F.leaky_relu(self.bn2(self.tconv2(x)), 0.2, True)
+        x = F.leaky_relu(self.bn3(self.tconv3(x)), 0.2, True)
+        x = F.leaky_relu(self.bn4(self.tconv4(x)), 0.2, True)
+        x = F.leaky_relu(self.bn5(self.tconv5(x)), 0.2, True)
         # x = F.relu(self.bn6(self.tconv6(x)))
 
 

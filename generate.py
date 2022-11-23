@@ -10,13 +10,13 @@ import random
 from dcgan import Generator
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-load_path', default='model/backup/9_11_22_ddr4/model_final.pth', help='Checkpoint to load path from')
+parser.add_argument('-load_path', default='model/model_360cnn_final.pth', help='Checkpoint to load path from')
 parser.add_argument('-num_output', default=1, help='Number of generated outputs')
 args = parser.parse_args()
 
 # Load the checkpoint file.
-for epoch in range(48,49,1):
-    path = f'./model/backup/9_11_22_ddr4/model_360cnn_epoch_{epoch}.pth'
+for epoch in range(34,35,1):
+    path = f'./model/model_360cnn_epoch_{epoch}.pth'
     state_dict = torch.load(path,map_location='cpu')
     print("Generating images for model : {}".format(epoch))
 
