@@ -16,11 +16,11 @@ import random
 from dcgan import Generator
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-load_path', default='model/model_360cnn_final.pth', help='Checkpoint to load path from')
+parser.add_argument('-load_path', default='model/model_360cnn_best.pth', help='Checkpoint to load path from')
 parser.add_argument('-num_output', default=1, help='Number of generated outputs')
 args = parser.parse_args()
 
-path = 'model/model_360cnn_final.pth'
+path = 'model/model_360cnn_best.pth'
 state_dict = torch.load(path,map_location='cpu')
 
 
@@ -47,5 +47,5 @@ for i in range(5):
     plt.figure()
     plt.axis("off")
     plt.title("Generated Images")
-    plt.imshow(np.transpose(generated_img[0], (1,2,0)))
+    plt.imshow(np.transpose(vutils.make_grid(generated_img, padding=2, normalize=True), (1,2,0)))
 plt.show()

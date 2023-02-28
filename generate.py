@@ -15,7 +15,7 @@ parser.add_argument('-num_output', default=1, help='Number of generated outputs'
 args = parser.parse_args()
 
 # Load the checkpoint file.
-for epoch in range(34,35,1):
+for epoch in range(150,200,5):
     path = f'./model/model_360cnn_epoch_{epoch}.pth'
     state_dict = torch.load(path,map_location='cpu')
     print("Generating images for model : {}".format(epoch))
@@ -34,7 +34,7 @@ for epoch in range(34,35,1):
 
 	# print(args.num_output)
 	# Get latent vector Z from unit normal distribution.
-    for i in range(10):
+    for i in range(2):
         noise = torch.randn(int(args.num_output), params['nz'], 1, 1, device=device)
 
 		# Turn off gradient calculation to speed up the process.
@@ -46,9 +46,9 @@ for epoch in range(34,35,1):
 		# Display the generated image.
         plt.figure()
         plt.axis("off")
-        plt.title("Generated Images")
+        plt.title(f"{i} Images generated for {epoch} Epoch")
         plt.imshow(np.transpose(vutils.make_grid(generated_img, padding=2, normalize=True), (1,2,0)))
-        plt.savefig(f'./generated_images/pic_generated_ddr4_{epoch}_{i}.jpg',format='jpg')
+        #plt.savefig(f'./generated_images/pic_generated_idrid_lrelu_label_smth_{epoch}_{i}.jpg',format='jpg')
         #plt.imsave(f'./generated_images/pic_generated_{epoch}_{i}.jpg', np.transpose(vutils.make_grid(generated_img, padding=2, normalize=True), (1,2,0)))
         print(f"{i} Images generated for {epoch} Epoch")
 
